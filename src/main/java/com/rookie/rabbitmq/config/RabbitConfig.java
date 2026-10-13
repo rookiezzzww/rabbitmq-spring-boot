@@ -61,4 +61,27 @@ public class RabbitConfig {
     public Binding bindQueue2ToDirectExchange(@Qualifier("directQueue2") Queue queue, @Qualifier("directExchange") DirectExchange exchange) {
         return BindingBuilder.bind(queue).to(exchange).with("black");
     }
+    // 2.3 topic
+    @Bean("topicQueue1")
+    public Queue topicQueue1() {
+        return QueueBuilder.durable(Constants.TOPIC_QUEUE1).build();
+    }
+    @Bean("topicQueue2")
+    public Queue topicQueue2() {
+        return QueueBuilder.durable(Constants.TOPIC_QUEUE2).build();
+    }
+    // 声明交换机
+    @Bean("topicExchange")
+    public TopicExchange topicExchange() {
+        return ExchangeBuilder.topicExchange(Constants.TOPIC_EXCHANGE_NAME).durable(true).build();
+    }
+    // 声明和交换机绑定
+    @Bean
+    public Binding bindQueue1ToTopicExchange(@Qualifier("topicQueue1") Queue queue, @Qualifier("topicExchange") TopicExchange exchange) {
+        return BindingBuilder.bind(queue).to(exchange).with("a.b.#");
+    }
+    @Bean
+    public Binding bindQueue2ToTopicExchange(@Qualifier("topicQueue2") Queue queue, @Qualifier("topicExchange") TopicExchange exchange) {
+        return BindingBuilder.bind(queue).to(exchange).with("a.*.a");
+    }
 }

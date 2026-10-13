@@ -13,4 +13,8 @@ public class Constants {
     public static final String DIRECT_QUEUE1 = "direct_queue1";
     public static final String DIRECT_QUEUE2 = "direct_queue2";
     public static final String DIRECT_EXCHANGE_NAME = "direct_exchange";
+    //2.3topic
+    public static final String TOPIC_QUEUE1 = "topic_queue1";
+    public static final String TOPIC_QUEUE2 = "topic_queue2";
+    public static final String TOPIC_EXCHANGE_NAME = "topic_exchange";
 }

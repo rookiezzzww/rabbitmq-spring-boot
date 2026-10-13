@@ -38,4 +38,15 @@ public class ProducerController {
         rabbitTemplate.convertAndSend(Constants.DIRECT_EXCHANGE_NAME, routingKey, msg);
         return "发送成功: " + msg;
     }
+
+    /**
+     * topic模式为生产者发送给交换机，交换机根据routingKey发送给对应的队列
+     * @return
+     */
+    @RequestMapping("/topic")
+    public String topic(String routingKey) {
+        String msg = "hello topic amqp " + routingKey;
+        rabbitTemplate.convertAndSend(Constants.TOPIC_EXCHANGE_NAME, routingKey, msg);
+        return "发送成功: " + msg;
+    }
 }
