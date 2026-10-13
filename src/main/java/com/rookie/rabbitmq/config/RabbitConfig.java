@@ -15,6 +15,7 @@ public class RabbitConfig {
     }
 
     // 2.发布订阅模式
+    // 2.1 fanout
     @Bean("fanoutQueue1")
     public Queue fanoutQueue1() {
         return QueueBuilder.durable(Constants.FANOUT_QUEUE1).build();
@@ -37,5 +38,27 @@ public class RabbitConfig {
     public Binding bindQueue2ToExchange(@Qualifier("fanoutQueue2") Queue queue, @Qualifier("fanoutExchange") FanoutExchange exchange) {
         return BindingBuilder.bind(queue).to(exchange);
     }
-
+    // 2.2 direct
+    @Bean("directQueue1")
+    public Queue directQueue1() {
+        return QueueBuilder.durable(Constants.DIRECT_QUEUE1).build();
+    }
+    @Bean("directQueue2")
+    public Queue directQueue2() {
+        return QueueBuilder.durable(Constants.DIRECT_QUEUE2).build();
+    }
+    // 声明交换机
+    @Bean("directExchange")
+    public DirectExchange directExchange() {
+        return ExchangeBuilder.directExchange(Constants.DIRECT_EXCHANGE_NAME).durable(true).build();
+    }
+    // 声明和交换机绑定
+    @Bean
+    public Binding bindQueue1ToDirectExchange(@Qualifier("directQueue1") Queue queue, @Qualifier("directExchange") DirectExchange exchange) {
+        return BindingBuilder.bind(queue).to(exchange).with("orange");
+    }
+    @Bean
+    public Binding bindQueue2ToDirectExchange(@Qualifier("directQueue2") Queue queue, @Qualifier("directExchange") DirectExchange exchange) {
+        return BindingBuilder.bind(queue).to(exchange).with("black");
+    }
 }
