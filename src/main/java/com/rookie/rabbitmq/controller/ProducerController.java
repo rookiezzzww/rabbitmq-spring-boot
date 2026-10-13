@@ -17,4 +17,10 @@ public class ProducerController {
         rabbitTemplate.convertAndSend("", Constants.WORK_QUEUE, msg);
         return "发送成功: " + msg;
     }
+    @RequestMapping("/fanout")
+    public String fanout() {
+        String msg = "hello fanout amqp";
+        rabbitTemplate.convertAndSend(Constants.FANOUT_EXCHANGE_NAME, "", msg);
+        return "发送成功: " + msg;
+    }
 }
